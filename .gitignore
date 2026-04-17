@@ -23,3 +23,5 @@ npm-debug.log*
 
 # prisma
 prisma/migrations/migration_lock.toml
+
+.vercel
