@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown, LayoutDashboard, LogOut } from 'lucide-react';
 import { locales, rtlLocales } from '@/i18n/routing';
+import { useAuth } from '@/lib/useAuth';
 
 const languageNames: Record<string, string> = {
   fr: 'Français',
@@ -27,6 +28,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const { user, isAuthenticated, isAdmin, loading: authLoading, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -89,6 +91,22 @@ export default function Header() {
                 )}
               </AnimatePresence>
             </div>
+            {!authLoading && (
+              isAuthenticated ? (
+                <>
+                  <Link href={isAdmin ? '/admin' as any : '/dashboard' as any} className={`flex items-center gap-1.5 font-medium transition-colors ${isScrolled ? 'text-primary hover:text-gold' : 'text-white/90 hover:text-white'}`}>
+                    <LayoutDashboard className="w-4 h-4" />
+                    {isAdmin ? 'Admin' : t('dashboard')}
+                  </Link>
+                  <button onClick={async () => { await logout(); window.location.href = `/${locale}/login`; }} className={`flex items-center gap-1.5 font-medium transition-colors ${isScrolled ? 'text-primary hover:text-red-500' : 'text-white/90 hover:text-red-300'}`}>
+                    <LogOut className="w-4 h-4" />
+                    {t('logout')}
+                  </button>
+                </>
+              ) : (
+                <Link href="/login" className={`font-medium transition-colors ${isScrolled ? 'text-primary hover:text-gold' : 'text-white/90 hover:text-white'}`}>{t('login')}</Link>
+              )
+            )}
             <Link href="/apply" className="btn-primary text-sm">{t('apply')}</Link>
           </div>
 
@@ -106,6 +124,20 @@ export default function Header() {
                 <Link key={link.href} href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="block py-2 text-primary font-medium">{link.label}</Link>
               ))}
               <hr className="my-4" />
+              {!authLoading && (
+                isAuthenticated ? (
+                  <>
+                    <Link href={isAdmin ? '/admin' as any : '/dashboard' as any} className="block py-2 text-primary font-medium flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                      <LayoutDashboard className="w-4 h-4" /> {isAdmin ? 'Admin' : t('dashboard')}
+                    </Link>
+                    <button onClick={async () => { await logout(); window.location.href = `/${locale}/login`; }} className="block py-2 text-red-500 font-medium flex items-center gap-2 w-full text-start">
+                      <LogOut className="w-4 h-4" /> {t('logout')}
+                    </button>
+                  </>
+                ) : (
+                  <Link href="/login" className="block py-2 text-primary font-medium" onClick={() => setIsMobileMenuOpen(false)}>{t('login')}</Link>
+                )
+              )}
               <Link href="/apply" className="btn-primary text-center block" onClick={() => setIsMobileMenuOpen(false)}>{t('apply')}</Link>
               <div className="pt-4">
                 <p className="text-sm text-gray-500 mb-2">{t('selectLanguage')}:</p>

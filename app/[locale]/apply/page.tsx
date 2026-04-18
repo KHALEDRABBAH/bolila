@@ -7,7 +7,7 @@ import { Link } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { GraduationCap, Briefcase, Award, Palmtree, Building2, Upload, FileText, CreditCard, Check, ArrowRight, ArrowLeft, Loader2, User, Mail, Phone, MapPin, AlertCircle } from 'lucide-react';
+import { GraduationCap, Briefcase, Award, Palmtree, Building2, Upload, FileText, CreditCard, Check, ArrowRight, ArrowLeft, Loader2, User, Mail, Phone, MapPin, AlertCircle, Lock } from 'lucide-react';
 import { rtlLocales } from '@/i18n/routing';
 
 const ALL_COUNTRIES = [
@@ -49,6 +49,7 @@ export default function Apply() {
     lastName: '',
     phone: '',
     email: '',
+    password: '',
     country: '',
     city: '',
     service: '',
@@ -89,6 +90,7 @@ export default function Apply() {
     if (!formData.lastName.trim()) newErrors.lastName = 'Required';
     if (!formData.phone.trim()) newErrors.phone = 'Required';
     if (!formData.email.trim()) newErrors.email = 'Required';
+    if (!formData.password || formData.password.length < 8) newErrors.password = 'Min 8 characters';
     if (!formData.country) newErrors.country = 'Required';
     if (!formData.city.trim()) newErrors.city = 'Required';
     if (!formData.service) newErrors.service = 'Required';
@@ -121,7 +123,7 @@ export default function Apply() {
               phone: formData.phone,
               country: formData.country,
               city: formData.city,
-              password: formData.email + '_Bolila2026!', // Auto-generated password
+              password: formData.password,
             }),
           });
 
@@ -298,6 +300,7 @@ export default function Apply() {
                   </div>
                   <InputField name="phone" label={t('form.phone')} type="tel" icon={Phone} hint={t('form.phoneHint')} />
                   <InputField name="email" label={t('form.email')} type="email" icon={Mail} />
+                  <InputField name="password" label={t('form.password')} type="password" icon={Lock} hint={t('form.passwordHint')} />
                   <div className="grid md:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-medium text-primary mb-2">{t('form.country')} <span className="text-red-400">*</span></label>

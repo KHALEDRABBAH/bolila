@@ -35,13 +35,23 @@ export async function POST(request: NextRequest) {
 
     const { firstName, lastName, email, phone, country, city, password } = validation.data;
 
-    // Step 2: Check if email already exists
-    const existingUser = await db.user.findUnique({ where: { email } });
+    // Step 2: Check if email or phone already exists
+    const [existingEmail, existingPhone] = await Promise.all([
+      db.user.findUnique({ where: { email } }),
+      db.user.findFirst({ where: { phone } }),
+    ]);
 
-    if (existingUser) {
+    if (existingEmail) {
       return NextResponse.json(
-        { error: 'An account with this email already exists' },
-        { status: 409 } // 409 Conflict
+        { error: 'An account with this email already exists', field: 'email', details: { email: ['This email is already registered. Please use a different email or login.'] } },
+        { status: 409 }
+      );
+    }
+
+    if (existingPhone) {
+      return NextResponse.json(
+        { error: 'An account with this phone number already exists', field: 'phone', details: { phone: ['This phone number is already registered.'] } },
+        { status: 409 }
       );
     }
 

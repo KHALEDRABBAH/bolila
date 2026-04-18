@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ChatPanel from '@/components/ChatPanel';
+import TestimonialForm from '@/components/TestimonialForm';
+import PhoneInput from '@/components/PhoneInput';
 import { 
   FileText, Clock, CheckCircle, XCircle, Eye, 
   Plus, LogOut, User, AlertCircle, Loader2 
@@ -38,6 +41,14 @@ export default function Dashboard() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Profile edit state
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editForm, setEditForm] = useState({ phone: '', country: '', city: '' });
+  const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,6 +58,11 @@ export default function Dashboard() {
         if (!meRes.ok) { router.push(`/${locale}/login`); return; }
         const meData = await meRes.json();
         setUser(meData.user);
+        setEditForm({
+          phone: meData.user.phone || '',
+          country: meData.user.country || '',
+          city: meData.user.city || '',
+        });
 
         // Redirect admin to admin dashboard
         if (meData.user.role === 'ADMIN') { router.push(`/${locale}/admin`); return; }
@@ -67,6 +83,29 @@ export default function Dashboard() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     router.push(`/${locale}/login`);
+  };
+
+  const handleSaveProfile = async () => {
+    setIsSaving(true);
+    // TODO: Connect to /api/auth/profile when backend is ready
+    // Mocking the success for frontend
+    setTimeout(() => {
+      setUser(prev => prev ? { ...prev, ...editForm } : prev);
+      setIsEditingProfile(false);
+      setIsSaving(false);
+    }, 1000);
+  };
+
+  const handleAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setIsUploadingAvatar(true);
+    // TODO: Connect to /api/auth/avatar when backend is ready
+    // Mocking success
+    setTimeout(() => {
+      setIsUploadingAvatar(false);
+    }, 1000);
   };
 
   const statusConfig: Record<string, { icon: any; color: string; bg: string }> = {
@@ -119,15 +158,84 @@ export default function Dashboard() {
 
           {/* Profile card */}
           {user && (
-            <div className="bg-white rounded-2xl shadow-sm p-6 mb-8 border border-gray-100">
-              <h2 className="font-heading font-semibold text-lg text-primary mb-4 flex items-center gap-2">
-                <User className="w-5 h-5 text-gold" /> Profile
-              </h2>
-              <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div><span className="text-gray-400 block">Phone</span><span className="font-medium">{user.phone}</span></div>
-                <div><span className="text-gray-400 block">Country</span><span className="font-medium">{user.country}</span></div>
-                <div><span className="text-gray-400 block">City</span><span className="font-medium">{user.city}</span></div>
+            <div className="bg-white rounded-2xl shadow-sm p-6 mb-8 border border-gray-100 relative overflow-hidden">
+              <div className="absolute top-0 end-0 w-32 h-32 bg-gold/5 rounded-bl-[100px] z-0 pointer-events-none" />
+              
+              <div className="flex items-center justify-between mb-6 border-b pb-4 relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="relative group">
+                    <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center text-gold font-bold text-xl overflow-hidden cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                      {isUploadingAvatar ? (
+                        <Loader2 className="w-6 h-6 animate-spin text-gold" />
+                      ) : (
+                        <span className="group-hover:hidden">{user.firstName.charAt(0)}{user.lastName.charAt(0)}</span>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Plus className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                    <input type="file" hidden ref={fileInputRef} accept="image/*" onChange={handleAvatarSelect} />
+                  </div>
+                  <div>
+                    <h2 className="font-heading font-semibold text-xl text-primary">{user.firstName} {user.lastName}</h2>
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 sm:gap-4 flex-wrap justify-end">
+                  <TestimonialForm />
+                  {!isEditingProfile && (
+                    <button onClick={() => setIsEditingProfile(true)} className="text-sm font-medium text-gold hover:text-gold/80 transition-colors bg-gold/10 px-3 py-1.5 rounded-lg">
+                      Edit Profile
+                    </button>
+                  )}
+                </div>
               </div>
+              
+              {isEditingProfile ? (
+                <div className="space-y-4">
+                  <div className="grid md:grid-cols-3 gap-4 text-sm">
+                    <div className="col-span-full md:col-span-1">
+                      <label className="text-gray-500 block mb-1">Phone</label>
+                      <PhoneInput 
+                        value={editForm.phone} 
+                        onChange={val => setEditForm({ ...editForm, phone: val })} 
+                      />
+                    </div>
+                    <div>
+                      <label className="text-gray-500 block mb-1">Country</label>
+                      <input 
+                        type="text" 
+                        value={editForm.country} 
+                        onChange={e => setEditForm({ ...editForm, country: e.target.value })} 
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-primary focus:outline-none focus:border-gold" 
+                      />
+                    </div>
+                    <div>
+                      <label className="text-gray-500 block mb-1">City</label>
+                      <input 
+                        type="text" 
+                        value={editForm.city} 
+                        onChange={e => setEditForm({ ...editForm, city: e.target.value })} 
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-primary focus:outline-none focus:border-gold" 
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 justify-end pt-2">
+                    <button onClick={() => setIsEditingProfile(false)} disabled={isSaving} className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors disabled:opacity-50">
+                      Cancel
+                    </button>
+                    <button onClick={handleSaveProfile} disabled={isSaving} className="btn-primary py-2 px-6 text-sm disabled:opacity-50">
+                      {isSaving ? 'Saving...' : 'Save Changes'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div><span className="text-gray-400 block mb-1">Phone</span><span className="font-medium text-primary">{user.phone}</span></div>
+                  <div><span className="text-gray-400 block mb-1">Country</span><span className="font-medium text-primary">{user.country}</span></div>
+                  <div><span className="text-gray-400 block mb-1">City</span><span className="font-medium text-primary">{user.city}</span></div>
+                </div>
+              )}
             </div>
           )}
 
@@ -186,6 +294,8 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          
+          <ChatPanel />
         </div>
       </div>
       <Footer />

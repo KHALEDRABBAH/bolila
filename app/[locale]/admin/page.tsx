@@ -7,6 +7,7 @@ import {
   CheckCircle, Clock, XCircle, Eye, ChevronDown,
   ChevronUp, Shield, LogOut, BarChart3, AlertCircle
 } from 'lucide-react';
+import ExpandableText from '@/components/ExpandableText';
 
 interface Stats {
   totalUsers: number;
@@ -52,7 +53,7 @@ interface User {
   _count: { applications: number };
 }
 
-type Tab = 'overview' | 'applications' | 'users' | 'messages';
+type Tab = 'overview' | 'applications' | 'users' | 'messages' | 'chat' | 'testimonials' | 'promo';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -204,8 +205,8 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Tab Navigation */}
-        <nav className="flex gap-1 mb-8 bg-[#0d1529] rounded-xl p-1.5 w-fit">
-          {(['overview', 'applications', 'users', 'messages'] as Tab[]).map(tab => (
+        <nav className="flex gap-1 mb-8 bg-[#0d1529] rounded-xl p-1.5 overflow-x-auto w-full sm:w-fit scrollbar-hide">
+          {(['overview', 'applications', 'users', 'messages', 'chat', 'testimonials', 'promo'] as Tab[]).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -365,7 +366,7 @@ export default function AdminDashboard() {
                             )}
                           </div>
                           <p className="text-white/50 text-sm mb-3">{msg.email} {msg.phone && `· ${msg.phone}`}</p>
-                          <p className="text-white/80 leading-relaxed">{msg.message}</p>
+                          <ExpandableText text={msg.message} maxLength={200} className="text-white/80 leading-relaxed" />
                           <p className="text-white/30 text-xs mt-3">{new Date(msg.createdAt).toLocaleString()}</p>
                         </div>
                         {!msg.isRead && (
@@ -380,6 +381,47 @@ export default function AdminDashboard() {
                     </div>
                   ))
                 )}
+              </div>
+            )}
+            {/* ========== CHAT TAB (Mock UI) ========== */}
+            {activeTab === 'chat' && (
+              <div className="bg-[#0d1529] rounded-2xl border border-white/5 p-12 text-center">
+                <MessageSquare className="w-16 h-16 text-[#d4a843] mx-auto mb-4 opacity-50" />
+                <h3 className="text-xl font-bold text-white mb-2">Live Support Chat</h3>
+                <p className="text-white/50 max-w-sm mx-auto mb-6">
+                  Real-time chat functionality with users is currently in development. When complete, admins will be able to respond to dashboard support requests here.
+                </p>
+                <div className="inline-block bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white/50">
+                  Backend connection pending
+                </div>
+              </div>
+            )}
+
+            {/* ========== TESTIMONIALS TAB (Mock UI) ========== */}
+            {activeTab === 'testimonials' && (
+              <div className="bg-[#0d1529] rounded-2xl border border-white/5 p-12 text-center">
+                <FileText className="w-16 h-16 text-[#d4a843] mx-auto mb-4 opacity-50" />
+                <h3 className="text-xl font-bold text-white mb-2">User Testimonials</h3>
+                <p className="text-white/50 max-w-sm mx-auto mb-6">
+                  Review and approve user testimonials before they are published to the main website.
+                </p>
+                <div className="inline-block bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white/50">
+                  Backend connection pending
+                </div>
+              </div>
+            )}
+
+            {/* ========== PROMO CODES TAB (Mock UI) ========== */}
+            {activeTab === 'promo' && (
+              <div className="bg-[#0d1529] rounded-2xl border border-white/5 p-12 text-center">
+                <DollarSign className="w-16 h-16 text-[#d4a843] mx-auto mb-4 opacity-50" />
+                <h3 className="text-xl font-bold text-white mb-2">Promo Codes Management</h3>
+                <p className="text-white/50 max-w-sm mx-auto mb-6">
+                  Generate, track, and disable promotional codes for application discounts.
+                </p>
+                <div className="inline-block bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white/50">
+                  Backend connection pending
+                </div>
               </div>
             )}
           </>
@@ -532,7 +574,7 @@ function ApplicationTable({
 
               {app.notes && (
                 <div className="bg-white/5 rounded-lg p-3 text-sm text-white/70">
-                  <span className="text-white/40">Notes:</span> {app.notes}
+                  <span className="text-white/40">Notes:</span> <ExpandableText text={app.notes} maxLength={150} className="inline" />
                 </div>
               )}
             </div>

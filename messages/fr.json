@@ -1,4 +1,4 @@
-{
+﻿{
   "metadata": {
     "siteTitle": "Bolila — Services de Placement affiliés à l'IBLT",
     "siteDescription": "Services professionnels de placement et de mise en relation pour l'éducation internationale, les stages, les bourses, l'emploi et les programmes sabbatiques.",
@@ -11,7 +11,9 @@
     "contact": "Contact",
     "apply": "Postuler",
     "login": "Connexion",
-    "selectLanguage": "Choisir la langue"
+    "selectLanguage": "Choisir la langue",
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion"
   },
   "hero": {
     "badge": "Services de Placement Professionnels",
@@ -46,33 +48,33 @@
   },
   "services": {
     "label": "Nos Services",
-    "title": "Nos Services",
-    "subtitle": "Services professionnels de placement et de mise en relation",
+    "title": "Services de Placement International",
+    "subtitle": "Services autorisés de placement et de mise en relation pour l'éducation, les carrières et le développement professionnel à l'international",
     "applyBtn": "Postuler pour ce service",
     "study": {
-      "title": "Connexion des Études",
-      "subtitle": "Study Connection",
-      "description": "Nous vous connectons professionnellement avec des universités internationales pour des études ou des transferts académiques, selon votre domaine et nos directives."
+      "title": "Placement pour Études à l'Étranger",
+      "subtitle": "Admissions Universitaires Internationales",
+      "description": "Votre passerelle vers les admissions universitaires internationales. Nous mettons en relation les étudiants avec des universités de premier plan en Europe, Amérique du Nord et Asie pour des programmes diplômants, des transferts académiques et des semestres d'échange. Notre service de placement autorisé gère l'intégralité du processus de candidature — de la sélection universitaire à la confirmation d'inscription."
     },
     "internship": {
-      "title": "Connexion de Stages",
-      "subtitle": "Internship Connection",
-      "description": "Nous trouvons des stages professionnels pour vous, tant au niveau national qu'international, dans des entreprises pertinentes à votre domaine, selon nos directives."
+      "title": "Placement en Stage International",
+      "subtitle": "Expérience Professionnelle à l'Étranger",
+      "description": "Lancez votre carrière internationale avec un stage professionnel sur mesure. Nous connectons les diplômés et étudiants ambitieux avec des entreprises vérifiées en Europe, Amérique du Nord et Asie pour des stages en ingénierie, commerce, informatique, santé et plus encore. Chaque opportunité est vérifiée pour sa qualité, sa légalité et sa pertinence professionnelle."
     },
     "scholarship": {
-      "title": "Connexion des Bourses",
-      "subtitle": "Scholarship Connection",
-      "description": "Nous recherchons les bourses disponibles dans les universités et instituts pour les candidats éligibles qui remplissent les conditions requises, strictement selon nos directives."
+      "title": "Recherche et Candidature de Bourses",
+      "subtitle": "Opportunités d'Études Financées",
+      "description": "Accédez à des bourses d'études que vous ne connaissiez pas. Notre équipe recherche activement et met en relation les candidats éligibles avec des bourses au mérite, des aides sociales et des bourses gouvernementales dans des universités du monde entier. D'Erasmus+ au Chevening en passant par les subventions régionales, nous identifions les opportunités qui correspondent à votre profil et maximisons vos chances d'obtenir un financement."
     },
     "sabbatical": {
-      "title": "Sabbatique Vacances",
-      "subtitle": "Sabbatical Vacation",
-      "description": "Pour les employés qui souhaitent enrichir leurs vacances à l'étranger avec une courte expérience professionnelle dans leur domaine à leur destination de vacances — nous nous en occupons légalement et professionnellement."
+      "title": "Expérience Professionnelle Sabbatique",
+      "subtitle": "Programmes de Vacances Enrichissantes",
+      "description": "Transformez votre temps libre en expérience professionnelle enrichissante à l'étranger. Conçu pour les professionnels en congé sabbatique, nous organisons des placements de travail de courte durée à votre destination de vacances. Gagnez une perspective internationale, élargissez votre réseau professionnel et revenez avec des compétences améliorées — le tout géré légalement et professionnellement."
     },
     "employment": {
-      "title": "Connexion d'Emploi",
-      "subtitle": "Employment Connection",
-      "description": "Pour toute personne cherchant un emploi national ou international, nous trouvons légalement les opportunités d'emploi disponibles dans votre domaine, selon nos directives."
+      "title": "Placement en Emploi International",
+      "subtitle": "Opportunités de Carrière Mondiale",
+      "description": "Votre pont vers les opportunités de carrière internationales. Nous mettons en relation les chercheurs d'emploi avec des employeurs vérifiés dans tous les secteurs — de l'ingénierie à la santé en passant par l'informatique et la gestion d'entreprise. Notre service de placement autorisé garantit que chaque opportunité est légitime, vérifiée professionnellement et alignée sur vos qualifications et objectifs de carrière."
     }
   },
   "process": {
@@ -181,7 +183,7 @@
       "service": "Sélectionnez un Service",
       "selectCountry": "Sélectionnez un pays",
       "next": "Suivant",
-      "back": "Retour"
+      "password": "Mot de passe", "passwordHint": "Minimum 8 caractères", "back": "Retour"
     },
     "documents": {
       "title": "Téléchargez les Documents Requis",
@@ -220,6 +222,16 @@
     "noAccount": "Vous n'avez pas de compte ?",
     "signUp": "Postuler",
     "forgotPassword": "Mot de passe oublié ?"
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "title": "Histoires de Réussite",
+    "subtitle": "Découvrez ceux qui ont transformé leur vie",
+    "items": {
+      "t1": { "name": "Ahmed Hassan", "role": "Études à l'étranger — Royaume-Uni", "quote": "Bolila a réalisé mon rêve d'étudier à Oxford. Leur accompagnement tout au long du processus de candidature était inestimable." },
+      "t2": { "name": "Sarah Johnson", "role": "Programme de stage — Allemagne", "quote": "Le placement de stage a dépassé mes attentes. Professionnels, solidaires et vraiment soucieux de votre réussite." },
+      "t3": { "name": "Mohamed Ali", "role": "Bénéficiaire de bourse", "quote": "J'ai reçu une bourse complète grâce à Bolila. Leur équipe m'a aidé à trouver l'opportunité parfaite correspondant à mon profil." }
+    }
   },
   "common": {
     "loading": "Chargement...",

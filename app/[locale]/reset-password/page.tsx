@@ -1,0 +1,148 @@
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Lock, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
+export default function ResetPassword() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
+  
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      setIsLoading(false);
+      return;
+    }
+
+    // TODO: Connect to /api/auth/reset-password when backend is ready
+    // Mocking the API response for now (Frontend Only Mode)
+    setTimeout(() => {
+      setIsSuccess(true);
+      setIsLoading(false);
+      
+      // Auto redirect after 3 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 3000);
+    }, 1500);
+  };
+
+  if (!token) {
+    return (
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center">
+        <div className="bg-white p-8 rounded-3xl shadow-xl max-w-md w-full text-center border border-red-100">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-primary mb-2">Invalid or Missing Token</h2>
+          <p className="text-gray-500 mb-6">The password reset link is invalid or has expired.</p>
+          <Link href="/forgot-password" className="btn-primary w-full justify-center">
+            Request New Link
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-cream flex flex-col">
+      <Header />
+      <div className="flex-1 flex flex-col justify-center py-24 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+            <h2 className="text-3xl font-heading font-bold text-primary">Create New Password</h2>
+            <p className="mt-2 text-gray-600 text-sm max-w-sm mx-auto">
+              Please enter your new password below. Make sure it's strong and secure.
+            </p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
+            <div className="bg-white py-8 px-4 shadow-xl shadow-gray-200/50 sm:rounded-3xl sm:px-10 border border-gray-100">
+              
+              {isSuccess ? (
+                <div className="text-center py-6">
+                  <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Password Reset Successfully</h3>
+                  <p className="text-gray-500 text-sm mb-6">
+                    Your password has been changed. You will be redirected to the login page momentarily.
+                  </p>
+                  <Link href="/login" className="btn-secondary w-full justify-center">
+                    Go to Login
+                  </Link>
+                </div>
+              ) : (
+                <form className="space-y-5" onSubmit={handleSubmit}>
+                  <div>
+                    <label className="block text-sm font-medium text-primary mb-2">New Password</label>
+                    <div className="relative">
+                      <Lock className="absolute start-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => { setPassword(e.target.value); setError(''); }}
+                        className={`input-field ps-12 ${error ? 'border-red-400 focus:border-red-400' : ''}`}
+                        placeholder="••••••••"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-primary mb-2">Confirm New Password</label>
+                    <div className="relative">
+                      <Lock className="absolute start-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
+                        className={`input-field ps-12 ${error ? 'border-red-400 focus:border-red-400' : ''}`}
+                        placeholder="••••••••"
+                      />
+                    </div>
+                  </div>
+
+                  {error && (
+                    <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      {error}
+                    </div>
+                  )}
+
+                  <div>
+                    <button type="submit" disabled={isLoading} className="btn-primary w-full justify-center mt-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                      {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Reset Password'}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}

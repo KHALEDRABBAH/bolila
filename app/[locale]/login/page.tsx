@@ -111,19 +111,25 @@ export default function Login() {
                 </div>
               </div>
 
-              <div className="text-end">
-                <a href="#" className="text-sm text-gold hover:underline">{t('forgotPassword')}</a>
+              <div className="flex items-center justify-end mb-2">
+                <div className="text-sm">
+                  <Link href="/forgot-password" className="font-medium text-gold hover:text-gold/80 transition-colors">
+                    {t('forgotPassword')}
+                  </Link>
+                </div>
               </div>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-4">
                   {error}
                 </div>
               )}
 
-              <button type="submit" disabled={isLoading} className="btn-primary w-full py-4 disabled:opacity-50">
-                {isLoading ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>{t('submit')}</span> : <>{t('submit')}<ArrowRight className="w-5 h-5 ms-2 rtl:rotate-180" /></>}
-              </button>
+              <div>
+                <button type="submit" disabled={isLoading} className="btn-primary w-full justify-center disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isLoading ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>{t('submit')}</span> : <>{t('submit')}<ArrowRight className="w-5 h-5 ms-2 rtl:rotate-180" /></>}
+                </button>
+              </div>
             </form>
           </motion.div>
         </div>

@@ -77,8 +77,8 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/60 text-sm">{t('copyright', { year: String(currentYear) })}</p>
             <div className="flex gap-6">
-              <span className="text-white/60 text-sm">{t('privacy')}</span>
-              <span className="text-white/60 text-sm">{t('terms')}</span>
+              <Link href="/privacy" className="text-white/60 text-sm hover:text-gold transition-colors">{t('privacy')}</Link>
+              <Link href="/terms" className="text-white/60 text-sm hover:text-gold transition-colors">{t('terms')}</Link>
             </div>
           </div>
         </div>

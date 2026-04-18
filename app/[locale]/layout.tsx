@@ -3,14 +3,46 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { rtlLocales } from '@/i18n/routing';
 import FloatingContact from '@/components/FloatingContact';
+import LanguageModal from '@/components/LanguageModal';
 import '../globals.css';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'metadata' });
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bolila-platform.vercel.app';
   return {
     title: t('siteTitle'),
     description: t('siteDescription'),
     icons: { icon: '/favicon.svg' },
+    metadataBase: new URL(appUrl),
+    openGraph: {
+      title: t('siteTitle'),
+      description: t('siteDescription'),
+      url: appUrl,
+      siteName: 'Bolila',
+      locale: locale,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('siteTitle'),
+      description: t('siteDescription'),
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: `${appUrl}/${locale}`,
+      languages: {
+        'fr': `${appUrl}/fr`,
+        'en': `${appUrl}/en`,
+        'ar': `${appUrl}/ar`,
+        'tr': `${appUrl}/tr`,
+        'ja': `${appUrl}/ja`,
+        'es': `${appUrl}/es`,
+        'it': `${appUrl}/it`,
+      },
+    },
   };
 }
 
@@ -29,6 +61,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
           <FloatingContact />
+          <LanguageModal />
         </NextIntlClientProvider>
       </body>
     </html>

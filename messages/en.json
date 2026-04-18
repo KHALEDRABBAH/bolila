@@ -1,4 +1,4 @@
-{
+﻿{
   "metadata": {
     "siteTitle": "Bolila — Placement Services affiliated with IBLT",
     "siteDescription": "Professional placement and connection services for international education, internships, scholarships, employment, and sabbatical programs.",
@@ -11,7 +11,9 @@
     "contact": "Contact",
     "apply": "Apply Now",
     "login": "Login",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
   },
   "hero": {
     "badge": "Professional Placement Services",
@@ -46,33 +48,33 @@
   },
   "services": {
     "label": "Our Services",
-    "title": "Our Services",
-    "subtitle": "Professional placement and connection services",
+    "title": "International Placement Services",
+    "subtitle": "Authorized placement and connection services for global education, careers, and professional development",
     "applyBtn": "Apply for this service",
     "study": {
-      "title": "Study Connection",
-      "subtitle": "Connexion des études",
-      "description": "We professionally connect you with international universities for studies or academic transfers, according to your field and our guidelines."
+      "title": "Study Abroad Placement",
+      "subtitle": "International University Admissions",
+      "description": "Your pathway to international university admissions. We professionally match students with top universities across Europe, North America, and Asia for degree programs, academic transfers, and exchange semesters. Our authorized placement service handles the complete application process — from university selection and document preparation to enrollment confirmation."
     },
     "internship": {
-      "title": "Internship Connection",
-      "subtitle": "Connexion de stages",
-      "description": "We find professional internship placements for you, both nationally and internationally, in companies relevant to your field, according to our guidelines."
+      "title": "International Internship Placement",
+      "subtitle": "Professional Experience Abroad",
+      "description": "Launch your international career with a professionally matched internship. We connect ambitious graduates and students with verified companies across Europe, North America, and Asia for internships in engineering, business, IT, healthcare, and more. Every opportunity is screened for quality, legality, and career relevance."
     },
     "scholarship": {
-      "title": "Scholarship Connection",
-      "subtitle": "Connexion des bourses",
-      "description": "We search for available scholarships at universities and institutes for eligible candidates who meet the required conditions, strictly according to our guidelines."
+      "title": "Scholarship Search & Application",
+      "subtitle": "Funded Education Opportunities",
+      "description": "Access scholarships you didn't know existed. Our team actively researches and matches eligible candidates with merit-based, need-based, and government-funded scholarships at universities worldwide. From Erasmus+ and Chevening to regional government grants, we identify opportunities that match your profile and maximize your chances of securing funding."
     },
     "sabbatical": {
-      "title": "Sabbatical Vacation",
-      "subtitle": "Sabbatique vacances",
-      "description": "For employees who want to enrich their vacation abroad with short professional experience in their field at their vacation destination — we handle it legally and professionally."
+      "title": "Sabbatical Professional Experience",
+      "subtitle": "Career-Enriching Vacation Programs",
+      "description": "Transform your time off into career-enriching professional experience abroad. Designed for employed professionals taking sabbatical leave, we arrange short-term work placements at your vacation destination. Gain international perspective, expand your professional network, and return with enhanced skills — all handled legally and professionally."
     },
     "employment": {
-      "title": "Employment Connection",
-      "subtitle": "Connexion d'emploi",
-      "description": "For anyone seeking national or international employment, we legally find available job opportunities in your field, according to our guidelines."
+      "title": "International Job Placement",
+      "subtitle": "Global Career Opportunities",
+      "description": "Your bridge to international career opportunities. We legally match job seekers with verified employers across industries — from engineering and healthcare to IT and business management. Our authorized placement service ensures every opportunity is legitimate, professionally vetted, and aligned with your qualifications and career goals."
     }
   },
   "process": {
@@ -181,7 +183,7 @@
       "service": "Select Service",
       "selectCountry": "Select a country",
       "next": "Next",
-      "back": "Back"
+      "password": "Password", "passwordHint": "Minimum 8 characters", "back": "Back"
     },
     "documents": {
       "title": "Upload Required Documents",
@@ -220,6 +222,16 @@
     "noAccount": "Don't have an account?",
     "signUp": "Apply Now",
     "forgotPassword": "Forgot Password?"
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "Success Stories",
+    "subtitle": "Hear from Those Who Transformed Their Lives",
+    "items": {
+      "t1": { "name": "Ahmed Hassan", "role": "Study Abroad — UK", "quote": "Bolila made my dream of studying at Oxford a reality. Their guidance throughout the application process was invaluable." },
+      "t2": { "name": "Sarah Johnson", "role": "Internship Program — Germany", "quote": "The internship placement exceeded my expectations. Professional, supportive, and truly care about your success." },
+      "t3": { "name": "Mohamed Ali", "role": "Scholarship Recipient", "quote": "I received a full scholarship through Bolila. Their team helped me find the perfect opportunity that matched my profile." }
+    }
   },
   "common": {
     "loading": "Loading...",

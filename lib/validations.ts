@@ -16,13 +16,31 @@ import { z } from 'zod';
 // ============================================================
 
 export const registerSchema = z.object({
-  firstName: z.string().min(2, 'First name must be at least 2 characters').max(50),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters').max(50),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(6, 'Phone number is required').max(20),
-  country: z.string().min(2, 'Country is required'),
-  city: z.string().min(2, 'City is required'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  firstName: z.string()
+    .trim()
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, 'First name cannot exceed 50 characters')
+    .regex(/^[a-zA-Z\u0600-\u06FF\s\-]+$/, 'First name can only contain letters and spaces'),
+  lastName: z.string()
+    .trim()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, 'Last name cannot exceed 50 characters')
+    .regex(/^[a-zA-Z\u0600-\u06FF\s\-]+$/, 'Last name can only contain letters and spaces'),
+  email: z.string()
+    .trim()
+    .toLowerCase()
+    .email('Invalid email address format (e.g., name@example.com)'),
+  phone: z.string()
+    .trim()
+    .min(6, 'Phone number must be at least 6 characters')
+    .max(20, 'Phone number cannot exceed 20 characters')
+    .regex(/^\+?[0-9\s\-()]+$/, 'Phone number can only contain digits, spaces, and + - ( )'),
+  country: z.string().trim().min(2, 'Country is required'),
+  city: z.string().trim().min(2, 'City is required'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number'),
 });
 
 export const loginSchema = z.object({
@@ -36,14 +54,14 @@ export const loginSchema = z.object({
 
 export const applicationSchema = z.object({
   serviceKey: z.enum(['study', 'internship', 'scholarship', 'sabbatical', 'employment'], {
-    errorMap: () => ({ message: 'Please select a valid service' }),
+    errorMap: () => ({ message: 'Please select a valid service from the list' }),
   }),
-  firstName: z.string().min(2).max(50),
-  lastName: z.string().min(2).max(50),
-  email: z.string().email(),
-  phone: z.string().min(6).max(20),
-  country: z.string().min(2),
-  city: z.string().min(2),
+  firstName: z.string().trim().min(2, 'Required').regex(/^[a-zA-Z\u0600-\u06FF\s\-]+$/, 'Invalid format'),
+  lastName: z.string().trim().min(2, 'Required').regex(/^[a-zA-Z\u0600-\u06FF\s\-]+$/, 'Invalid format'),
+  email: z.string().trim().toLowerCase().email('Invalid email'),
+  phone: z.string().trim().min(6, 'Required').regex(/^\+?[0-9\s\-()]+$/, 'Invalid format'),
+  country: z.string().trim().min(2, 'Required'),
+  city: z.string().trim().min(2, 'Required'),
 });
 
 // ============================================================
